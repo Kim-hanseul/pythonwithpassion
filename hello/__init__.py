@@ -1,12 +1,17 @@
 from hello.domains import Member
 from hello.models import Quiz01Calculator, Quiz02Bmi, Quiz03Grade, Quiz05Dice, Quiz07RandomChoice, Quiz08Rps, \
-    Quiz10LeapYear, Quiz11NumberGolf
+    Quiz10LeapYear, Quiz11NumberGolf, Quiz12Lotto, Quiz13Bank, Quiz14Gugudan
 
 if __name__ == '__main__':
 
     while 1:
-        menu = input(' 0.Exit 1.Calculator 2. bmi 3. Grade 5.Dice 6. random num pick '
-                     '7.random person pick 8. rps 10. luna year 11.golf game ')
+        menu = input('##########################################################################\n'
+                     '# 0. Exit 1. Calculator 2. Bmi 3. Grade 5. Dice 6. Random num pick       #\n'
+                     '##########################################################################\n'
+                     '# 7.Random person pick 8. rps 10. Luna year 11. Golf game 12. Lotto pick #\n'
+                     '##########################################################################\n'
+                     '# 13. bank machine 14. gugudan                                           #\n'
+                     '##########################################################################\n')
 
         if menu == 0:
             break
@@ -45,11 +50,20 @@ if __name__ == '__main__':
             print(q7.chooseMember())
 
         elif menu == '8':
-            q8 = Quiz08Rps(1)  # 가위 1 바위 2 보 3
-            print(q8.game())
+            q8 = Quiz08Rps()  # 가위 1 바위 2 보 3
+            print({q8.game()})
         elif menu == '10':
             q10 = Quiz10LeapYear(int(input('year')))
             print(f'{q10.leap()}')
         elif menu == '11':
             q11 = Quiz11NumberGolf()
             print(f'{q11.golf()}')
+        elif menu == '12':
+            q12 = Quiz12Lotto()
+            print(f'{q12.lotto}')
+        elif menu == '13':
+            q13 = Quiz13Bank()
+            print(f'{q13.bank()}')
+        elif menu == '14':
+            q14 = Quiz14Gugudan()
+            print(f'{q14.gugudan()}')

@@ -149,40 +149,19 @@ class Quiz07RandomChoice(object):
 
 
 class Quiz08Rps(object):
-    def __init__(self, player):
-        self.player = player
-        self.computer = myRandom(1,3)
-
     def game(self):
-        c = self.computer
-        p = self.player
-        # 1 가위 2  바위 3 보
-        rps = ['가위', '바위', '보']
-        if p == 1:
-            if c == 1:
-                res = f'플레이어: {rps[0]} , 컴퓨터: {rps[0]}, 결과: 무승부'
-            elif c == 2:
-                res = f'플레이어: {rps[0]} , 컴퓨터: {rps[1]}, 결과: 패배'
-            elif c == 3:
-                res = f'플레이어: {rps[0]} , 컴퓨터: {rps[2]}, 결과: 승리'
-        elif p == 2:
-            if c == 1:
-                res = '승리'
-            elif c == 2:
-                res = '무승부'
-            elif c == 3:
-                res = '패배'
-        elif p == 3:
-            if c == 1:
-                res = '패배'
-            elif c == 2:
-                res = '승리'
-            elif c == 3:
-                res = '무승부'
-        else:
-            res = '1~3 입력'
+        while 1:
+            com = myRandom(0, 2)
+            player = int(input('0. rock 1. scissors 2. paper 3. 종료'))
+            if player == 3:
+                return 'exit'
+            if player-com == 0:
+                print(f' player : {player} com : {com} result : draw..')
+            elif player-com == 1 or player-com == -2:
+                print(f' player : {player} com : {com} result : lose :( ')
+            elif com-player == 2 or player-com == -1:
+                print(f' player : {player} com : {com} result : win! ')
 
-        return res
 
 
 
@@ -228,16 +207,42 @@ class Quiz11NumberGolf(object):
 
 class Quiz12Lotto(object):
     def __init__(self):
-        pass
+        self.lotto = random.sample(range(1, 45), 6)
+        self.lotto.sort()
 
 
 class Quiz13Bank(object): # 이름, 입금, 출금만 구현
-    def __init__(self):
-        pass
+    def bank(self):
+        total = 100000
+        while 1:
+            menu = int(input('사용하실 메뉴를 선택해 주세요\n'
+                  '0. 종료 1.잔액조회 2.현금인출 3.입금'))
+            if menu == 0:
+                return ('종료')
+            if menu == 1:
+                print(f'{total}')
+            elif menu == 2:
+                output = int(input('출금하실 금액'))
+                if total >= output:
+                    total = total-output
+                    print(f'인출금액: {output}\n 잔액: {total}')
+                elif total < output:
+                    print('잔액이 부족합니다.')
+            elif menu == 3:
+                inp = int(input('입금하실 금액'))
+                total = inp + total
+                print(f'입금 금액:{inp} 잔액:{total}')
 
 
 class Quiz14Gugudan(object): # 책받침 구구단
-    def __init__(self):
-        pass
+    def gugudan(self):
+        res = ""
+        for i in [2,6] :
+            for j in range(1, 10):
+                for k in range(0, 4):
+                    res += f'{i + k} * {j} = {(i + k) * j}\t'
+                res += '\n'
+            res += '\n'
+        return res
 
 
