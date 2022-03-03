@@ -1,42 +1,7 @@
 import random
 
-def main():
-    while 1:
-        menu = input(' 0.Exit 1.Calculator 2. bmi 3. Grade 5.Dice 6. random num pick 7.random person pick 8. rps')
-        if menu == 0:
-            break
-        if menu == '1': # 계산기
-            q1 = Quiz01Calculator(int(input('first num')), int(input('second num')) )
-            print(f'{q1.num1} {q1.op} {q1.num2} = {q1.res}')
-        elif menu == '2': #BMI
-            q2 = Quiz02Bmi((input('name')), float(input('height')), float(input('weight')))
-            print(f'name : {q2.name}, height : {q2.height}, '
-                  f'weight : {q2.weight}, Bmi status : {q2.getBmi()} ')
-        elif menu == '3':
-            q3 = Quiz03Grade(input('이름'), int(input('국어점수')), int(input('영어점수')), int(input('수학점수')))
-            print(f'name: {q3.name} kor: {q3.kor} 점 eng: {q3.eng} 점 math: {q3.math} 점 total: {q3.total()}점 avg: {q3.avg()} pass: {q3.gradePass()}')
 
-        elif menu == '4':
-            pass
-            """q4 = Quiz04GradeAuto()
-            for i in []:
-                print(i)
-            kor = int(input('kor : '))
-            eng = int(input('eng : '))
-            math = int(input('math : '))"""
 
-            #grade=Quiz03Grade(input('name'), int(input('kor grade')), int(input('eng grade')), int(input('math grade')))
-        elif menu == '5':
-            print(Quiz05Dice.cast())
-        elif menu == '6':
-            q6 = None
-        elif menu == '7':
-            q7 = Quiz07RandomChoice()
-            print(q7.chooseMember())
-
-        elif menu == '8':
-            q8 = Quiz08Rps(1)  # 가위 1 바위 2 보 3
-            print(q8.game())
 
 
 class Quiz01Calculator(object):
@@ -46,65 +11,50 @@ class Quiz01Calculator(object):
         self.op = op
         self.num2 = num2
 
-    def calc(self):
-        self.add()
-        self.sub()
-        self.mul()
-        self.div()
-        self.rest()
 
-    def add(self):
+
+    def add (self):
         return self.num1 + self.num2
 
-    def sub(self):
+    def min (self):
         return self.num1 - self.num2
 
-    def mul(self):
+    def mul (self):
         return self.num1 * self.num2
 
-    def div(self):
+    def div (self):
         return self.num1 / self.num2
 
-    def rest(self):
+    def rest (self):
         return self.num1 % self.num2
 
     def res(self):
-       if self.op == '+':
-           return self.add()
+             if self.op == '+':
+                return self.add()
+             elif self.op == '-':
+                return self.min()
+             elif self.op == '*':
+                return self.mul()
+             elif self.op == '/':
+                return self.div()
+             elif self.op == '%':
+                return self.rest()
+             else:
+                return 'wrong message'
 
-       elif self.op == '-':
-           return self.sub()
-
-       elif self.op == '*':
-           return self.mul()
-
-       elif self.op == '/':
-           return self.div()
-
-       elif self.op == '%':
-           return self.rest()
-       else:
-           print('wrong type')
-
-class Quiz02Bmi(object):
-
-    def __init__(self, name, height, weight):
-        self.name = name
-        self.height = height
-        self.weight = weight
-
-    def res(self):
-        return self.weight / (self.height * self.height / 10000)
-
-    def getBmi(self):
-        if self.res() <= 18.5:
-            return f'저체중'
-        elif self.res() <= 22.9:
-            return f'정상'
-        elif self.res() <= 24.9:
-            return f'과체중'
-        elif self.res() >= 25:
-            return f'비만'
+class Quiz02Bmi:
+    @staticmethod
+    def getBmi(member):
+        this = member
+        res =this.weight/(this.height*this.height)*10000
+        if res <= 18.5:
+            return '저체중'
+        elif res <= 22.9:
+            return '정상'
+        elif res <= 24.9:
+            return '과체중'
+        elif res >= 25:
+            return '비만'
         else:
             return 'wrong number'
 
@@ -213,7 +163,7 @@ class Quiz08Rps(object):
                 res = f'플레이어: {rps[0]} , 컴퓨터: {rps[0]}, 결과: 무승부'
             elif c == 2:
                 res = f'플레이어: {rps[0]} , 컴퓨터: {rps[1]}, 결과: 패배'
-            elif c == '3':
+            elif c == 3:
                 res = f'플레이어: {rps[0]} , 컴퓨터: {rps[2]}, 결과: 승리'
         elif p == 2:
             if c == 1:
@@ -244,13 +194,36 @@ class Quiz09GetPrime(object):
 
 
 class Quiz10LeapYear(object):
-    def __init__(self):
-        pass
+    def __init__(self, year):
+        self.year = year
+    def leap(self):
+        y=self.year
+        if (y % 4 == 0 and not y % 100 == 0 or y % 400 == 0):
+            res='윤년'
+        else:
+            res='평년'
+        return res
 
 
 class Quiz11NumberGolf(object):
     def __init__(self):
-        pass
+        self.static = myRandom(0, 100)
+
+    def golf(self):
+        st = self.static
+        print(st)
+        while 1:
+            se = int(input('number please'))
+            if st == se:
+                res = 'correct!'
+                return res
+            elif st > se:
+                print('up!')
+            elif st < se:
+                print('down..')
+            else:
+                return 'wrong text'
+
 
 
 class Quiz12Lotto(object):
@@ -267,7 +240,4 @@ class Quiz14Gugudan(object): # 책받침 구구단
     def __init__(self):
         pass
 
-
-if __name__ == '__main__':
-    main()
 
