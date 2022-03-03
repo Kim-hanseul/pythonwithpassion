@@ -168,8 +168,17 @@ class Quiz08Rps(object):
 
 
 class Quiz09GetPrime(object):
-    def __init__(self):
-        pass
+    def prime(self):
+        a = int(input('최대값'))
+        res = ''
+        for i in range(2, a):
+            num = 0
+            for j in range(2, i + 1):
+                if i % j == 0:
+                    num += 1
+            if num == 1:
+                res += str(i) + '\t'
+        return res
 
 
 class Quiz10LeapYear(object):

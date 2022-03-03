@@ -1,17 +1,17 @@
 from hello.domains import Member
 from hello.models import Quiz01Calculator, Quiz02Bmi, Quiz03Grade, Quiz05Dice, Quiz07RandomChoice, Quiz08Rps, \
-    Quiz10LeapYear, Quiz11NumberGolf, Quiz12Lotto, Quiz13Bank, Quiz14Gugudan
+    Quiz10LeapYear, Quiz11NumberGolf, Quiz12Lotto, Quiz13Bank, Quiz14Gugudan, Quiz09GetPrime
 
 if __name__ == '__main__':
 
     while 1:
-        menu = input('##########################################################################\n'
-                     '# 0. Exit 1. Calculator 2. Bmi 3. Grade 5. Dice 6. Random num pick       #\n'
-                     '##########################################################################\n'
-                     '# 7.Random person pick 8. rps 10. Luna year 11. Golf game 12. Lotto pick #\n'
-                     '##########################################################################\n'
-                     '# 13. bank machine 14. gugudan                                           #\n'
-                     '##########################################################################\n')
+        menu = input('############################################################################\n'
+                     '# 0. Exit 1. Calculator 2. Bmi 3. Grade 5. Dice 6. Random num pick         #\n'
+                     '############################################################################\n'
+                     '# 7.Random person pick 8. rps 9. prime number 10. Luna year 11. Golf game  #\n'
+                     '############################################################################\n'
+                     '# 12. Lotto pick 13. bank machine 14. gugudan                              #\n'
+                     '############################################################################\n')
 
         if menu == 0:
             break
@@ -52,6 +52,9 @@ if __name__ == '__main__':
         elif menu == '8':
             q8 = Quiz08Rps()  # 가위 1 바위 2 보 3
             print({q8.game()})
+        elif menu == '9':
+            q9 = Quiz09GetPrime()
+            print(f'{q9.prime()}')
         elif menu == '10':
             q10 = Quiz10LeapYear(int(input('year')))
             print(f'{q10.leap()}')
