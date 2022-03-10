@@ -227,8 +227,10 @@ class Account(object):
                 print(a)
             elif menu == '3':
                 Account.deposit_money(input('입금할 계좌번호'), int(input('입금액')), ls)
+                # print(f'입금액 : {deposit} , 계좌번호 : {acc_num}')
             elif menu == '4':
                 Account.wd_money(input('출금할 계좌번호'), int(input('출금액')), ls)
+                # print(f'출금액 : {wd} , 출금 계좌 번호 : {acc_num} 잔액 : {j.money}')
             elif menu == '5':
                 Account.del_account(ls, input('탈퇴할 계좌번호'))
             elif menu == '6':
