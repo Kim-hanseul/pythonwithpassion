@@ -113,6 +113,8 @@ class Quiz20:
         dict = self.quiz24zip()
         df = pd.DataFrame.from_dict(dict, orient='index')
         print(df)
+        df.to_csv('./save/bugs.csv', sep=',', na_rep='NaN')
+
         #a = [i if i==0 or i==0 else i for i in range()]
         #b = [i if i==0 or i==0 else i for i in[]] #iterator
         #c = [(i,j) for i,j in enumerate([])] #enumeration
