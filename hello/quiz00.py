@@ -98,9 +98,8 @@ class Quiz00:
                      f'** avg = {avg}\n'
                      f'** pass or fail = {grade}')
 
-    def quiz06memberChoice(self):
-        members = myMembers()
-        return print(members)
+    def quiz06member_choice(self):
+        return myMembers()[myRandom(0,23)]
 
 
     def quiz07lotto(self):
