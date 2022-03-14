@@ -161,6 +161,7 @@ class Quiz20:
         2   2   4   6
         '''
     def quiz29_pandas_df(self) -> str:
+        '''
         d = []
         d1 = []
         columns = [chr(i) for i in range(97,100)]
@@ -170,3 +171,34 @@ class Quiz20:
         # [i if (i,j) for i,j in enumerate([])]
         # df3 = pd.DataFrame.from_dict(d2, orient='index', columns=c)
         print(frame)
+        '''
+        d = {'a' : [1,2], 'b' : [3,4] , 'c' : [5,6]}
+        df1 = pd.DataFrame(d, index=[1,2])
+        '''
+            a b c
+        1   1 3 5
+        2   2 4 6
+        '''
+        dd = {"1" : [1,3,5], "2" : [2,4,6]}
+        df2 = pd.DataFrame.from_dict(dd)
+        '''
+            1 2
+        0   1 2
+        1   3 4
+        2   5 6  
+        '''
+        # df4 = pd.DataFrame.from_dict(d2, orient="index", columns=['A', 'B', 'C'])
+        columns = [chr(i) for i in range(97,100)] #['a','b','c']
+        odds = []
+        evens = []
+        e = [odds.append(i) if i%2 !=0 else evens.append(i) for i in range(1,7)]
+        d1 = {"1", "2"}
+        d2 = [odds, evens]
+        d3 = {i:j for i,j in zip(d1,d2)}
+        df5 = pd.DataFrame.from_dict(d3, orient='index', columns=columns)
+        print(df5)
+        return None
+
+
+
+
