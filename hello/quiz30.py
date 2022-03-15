@@ -5,8 +5,7 @@ import pandas as pd
 from icecream import ic
 import numpy as np
 from domains import myMembers
-from domains import myRandom
-from titanic.models import Model
+from context.models import Model
 
 
 class Quiz30:
@@ -99,16 +98,34 @@ class Quiz30:
         # stud = myMembers()
         # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html
         # grade.csv
-        model = Model()
-        grade_df = model.new_model('grade.csv')
-        ic(grade_df)
 
-        d = np.random.randint(0,100, (24,4))
-        idx = myMembers()
-        col = ['자바', '파이썬', '자바스크립트', 'SQL']
-        df1 = pd.DataFrame(d, index=idx, columns=col)
-        ic(df1)
-        df1.to_csv('./save/grade.csv', sep=',', na_rep='NaN')
+        subjects = ['자바', '파이썬', '자바스크립트', 'SQL']
+        scores = np.random.randint(0,100, (24,4))
+        students = myMembers()
+        students_scores = {students:scores for students,scores in zip(students, scores)}
+        students_scores_df = pd.DataFrame.from_dict(students_scores, orient='index', columns=subjects)
+        model = Model()
+        grade_df = model.new_model(fname='grade.csv')
+        ic(grade_df)
+        print('Q1. 파이썬의 점수를 출력하시오')
+        python_scores = grade_df.loc[:,'파이썬']
+        ic(type(python_scores))
+        ic(python_scores)
+        print('Q2. 조현국의 점수만 출력하시오')
+        cho_scores = grade_df.loc['조현국']
+        ic(type(cho_scores))
+        ic(cho_scores)
+        print('Q3. 조현국의 과목별 점수를 출력하시오')
+        cho_subjects_scores = grade_df.loc[['조현국']]
+        ic(type(cho_subjects_scores))
+        ic(cho_subjects_scores)
+
+
+
+
+
+
+        grade_df.to_csv('./save/grade.csv', sep=',', na_rep='NaN')
         '''
         ic| df2:      자바  파이썬  자바스크립트  SQL
          홍정명  74   49      93   48
