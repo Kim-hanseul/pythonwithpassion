@@ -30,10 +30,11 @@ class TitanicTemplates(object):
         self.sex(this)
         self.embarked(this)
 
-
     @staticmethod
     def draw_survived(this) -> None:
-        plt.show(this)
+        f, ax = plt.subplots(1, 2, figsize=(18, 8))
+        this['Survived']
+        plt.show()
 
     @staticmethod
     def survived(this) -> None:

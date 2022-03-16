@@ -2,9 +2,6 @@
 from titanic.views import TitanicView
 from titanic.models import TitanicModel
 from titanic.templates import TitanicTemplates
-from context.domains import Dataset
-from context.models import Model
-from icecream import ic
 if __name__ == '__main__':
     view = TitanicView()
     model = TitanicModel(train_fname='train.csv',
@@ -13,18 +10,12 @@ if __name__ == '__main__':
 
     while 1:
 
-        menu = input('0. exit 1. template 2. 전처리')
-        if menu == '0':
+        menu = input('1.템플릿 2.전처리')
+        if menu == '1':
+            print(' #### 1. 템플릿 #### ')
+            template = TitanicTemplates(fname='train.csv')
             break
-
-        elif menu == '1':
-            print('#### 1. template ####')
-            template = TitanicTemplates(train_fname='train.csv', test_fname='test.csv')
-            break
-
-
         elif menu == '2':
-            print('#### 2. 전처리 ####')
+            print(' #### 2. 전처리 #### ')
             model = TitanicModel(train_fname='train.csv', test_fname='test.csv')
-
-            ic(template)
+            break
