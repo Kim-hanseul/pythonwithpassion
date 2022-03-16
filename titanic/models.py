@@ -4,67 +4,71 @@ from context.domains import Dataset
 
 
 class TitanicModel(object):
+    model = Model()
+    dataset = Dataset()
     def __init__(self, train_fname, test_fname):
-        self.model = Model()
-        self.dataset = Dataset()
         self.train = self.model.new_model(train_fname)
         self.test = self.model.new_model(test_fname)
         # id 추출
-        ic(f'트레인 컬럼 {self.train.columns}')
-        ic(f'트레인 헤드 {self.train.head()}')
-        ic(self.train)
 
     def preprocess(self):
-        self.create_label()
-        self.pclss_ordinal()
-        self.name_nominal()
-        self.sex_nominal()
-        self.age_ratio()
-        self.sib_sp_garbage()
-        self.parch_garbage()
-        self.ticket_garbage()
-        self.fare_ratio()
-        self.cabin_garbage()
-        self.embarked_nominal()
+        df = self.train
+        ic(f'트레인 컬럼 {self.df.columns}')
+        ic(f'트레인 헤드 {self.df.head()}')
+        ic(df)
+        df = self.drop_feature(df)
+        df = self.create_label(df)
+        df = self.create_train(df)
+        df = self.embarked_nominal(df)
+        df = self.pclass_ordinal(df)
+        df = self.name_nominal(df)
+        df = self.sex_nominal(df)
+        df = self.age_ratio(df)
+        df = self.fare_ratio(df)
+        return df
 
-    def create_label(self)->object:
-        pass
+    @staticmethod
+    def create_label(df)->object:
+        return TitanicModel.create_train(df)
 
-    def create_train(self)->object:
-        pass
+    @staticmethod
+    def create_train(df)->object:
+        return TitanicModel.drop_feature(df)
 
-    def drop_feature(self)->object:
-        pass
+    def drop_feature(self,df)->object:
+        for i in []:
+            ()
+        '''
+        self.ticket_garbage(df)
+        self.sib_sp_garbage(df)
+        self.cabin_garbage(df)
+        self.parch_garbage(df)
+        '''
+        return df
+
+
     # Categorical vs Quantitative
     # Cate -> nominal (이름) vs. ordinal (순서)
     # Quan -> interval (상대) vs. ratio (절대)
 
-    def pclss_ordinal(self)->object:
-        pass
+    @staticmethod
+    def pclass_ordinal(df)->object:
+        return df
+    @staticmethod
+    def name_nominal(df)->object: # 네임에서 계급이 떼어내야함
+        return df
+    @staticmethod
+    def sex_nominal(df)->object:
+        return df
+    @staticmethod
+    def age_ratio(df)->object:
+        return df
 
-    def name_nominal(self)->object: # 네임에서 계급이 떼어내야함
-        pass
+    @staticmethod
+    def fare_ratio(df)->object:
+        return df
 
-    def sex_nominal(self)->object:
-        pass
+    @staticmethod
+    def embarked_nominal(df)->object: #항구에 따라 소득수준이 다름
+        return df
 
-    def age_ratio(self)->object:
-        pass
-
-    def sib_sp_garbage(self)->object:
-        self.drop_feature()
-
-    def parch_garbage(self)->object:
-        self.drop_feature()
-
-    def ticket_garbage(self)->object:
-        self.drop_feature()
-
-    def fare_ratio(self)->object:
-        pass
-
-    def cabin_garbage(self)->object:
-        self.drop_feature()
-
-    def embarked_nominal(self)->object: #항구에 따라 소득수준이 다름
-        pass
