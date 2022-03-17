@@ -14,11 +14,10 @@ class TitanicModel(object):
         this.train = that.new_dframe(train_fname)
         this.test = that.new_dframe(test_fname)
         this.id = this.test['PassengerId']
-        this.label = this.train['Surivived']
+        this.label = this.train['Survived']
         this.train = this.train.drop('Survived', axis=1)
-        this.test = this.test.drop('Survived', axis=1)
         # Entity 에서 Object 로 변환
-        this = self.drop_feature(this)
+        this = self.drop_feature(this, 'SibSp', 'Parch', 'Ticket', 'Cabin')
         '''
         this = self.create_train(this)
         this = self.embarked_nominal(this)
@@ -58,10 +57,18 @@ class TitanicModel(object):
         return this
     @staticmethod
     def drop_feature(this, *feature) -> object:
-        feature = ['Cabin', 'Parch', 'Ticket', 'SibSp']
-        this.train = [this.train.drop(i, axis=1) for i in feature]
-        this.test = [this.test.drop(i, axis=1) for i in feature]
-        [this.drop([*feature], axis=1, inplace=True) for i in [*feature]]
+        # a = [i for i in feature]
+        # this.train = this.train.drop(, axis=1)
+        # this.test = this.test.drop(, axis=1)
+        '''
+        for j in [this.train, this.test]:
+            [j.drop(i, axis=1, inplace=True) for i in feature]
+            '''
+        [i.drop(list(feature), axis=1, inplace=True) for i in [this.train, this.test]]
+        # [j.drop(i, axis=1, inplace=True) for j in [this.train, this.test] for i in feature]
+        # [this.drop([*feature], axis=1, inplace=True) for i in [*feature]]
+        print(this.train)
+        print(this.test)
 
         '''
         self.cabin_garbage(df)
