@@ -32,10 +32,12 @@ class TitanicModel(object):
         this = self.embarked_nominal(this)
         this = self.age_ratio(this)
         this = self.drop_feature(this, 'Age')
+        this = self.fare_ratio(this)
+        this = self.drop_feature(this, 'Fare')
 
         '''
         this = self.pclass_ordinal(this)
-        this = self.fare_ratio(this)
+    
         '''
 
         self.df_info(this)
@@ -44,8 +46,8 @@ class TitanicModel(object):
     @staticmethod
     def df_info(this):
         [print(f'{i.info()}') for i in [this.train, this.test]]
-        ic(this.train.head(3))
-        ic(this.test.head(3))
+        ic(this.train.head(5))
+        ic(this.test.head(5))
 
     @staticmethod
     def null_check(this):
@@ -155,6 +157,15 @@ class TitanicModel(object):
 
     @staticmethod
     def fare_ratio(this) -> object:
-        this.test['Fare'] = this.test['Fare'].fillna(1)
-        this.train['FareBand'] = pd.qcut(this.train['Fare'], 4)
+        train = this.train
+        test = this.test
+        fare_mapping = {'low Level' : 0, 'middle Level' : 1, 'high Level' : 2, 'highest Level' : 3}
+        train['Fare'] = train['Fare'].fillna(1)
+        test['Fare'] = test['Fare'].fillna(1)
+        # print(f'qcut 으로 bins 값 설정 {this.train["FareBand"].head()}')
+        bins = [-1, 8, 15, 31, np.inf]
+        labels = ['low Level', 'middle Level', 'high Level', 'highest Level']
+        for these in train, test:
+            these['FareBand'] = pd.qcut(these['Fare'], 4, labels=labels)
+            these['FareBand'] = these['FareBand'].map(fare_mapping)
         return this
