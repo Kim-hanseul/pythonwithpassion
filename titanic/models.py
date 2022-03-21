@@ -4,6 +4,9 @@ from context.domains import Dataset
 from context.models import Model
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import RandomForestClassifier
 
 class TitanicModel(object):
 
@@ -34,20 +37,34 @@ class TitanicModel(object):
         this = self.drop_feature(this, 'Age')
         this = self.fare_ratio(this)
         this = self.drop_feature(this, 'Fare')
-
-        '''
         this = self.pclass_ordinal(this)
-    
-        '''
-
-        self.df_info(this)
+        # self.df_info(this)
+        k_fold = self.create_k_fold()
+        accuracy = self.get_accuracy(this, k_fold)
+        ic(accuracy)
         return this
+
+
+    def learning(self, train_fname, test_fname):
+        this = self.preprocess(train_fname, test_fname)
+        print('*'*100)
+        self.df_info(this)
+        k_fold = self.create_k_fold()
+        ic(f'사이킷런 알고리즘 정확도: {self.get_accuracy(this, k_fold)}')
+        self.submit(this)
+
+    @staticmethod
+    def submit(this):
+        clf = RandomForestClassifier()
+        clf.fit(this.train, this.label)
+        prediction = clf.predict(this.test)
+        pd.DataFrame({'PassengerId': this.id, 'Survived': prediction}).to_csv('./save/submission.csv', index=False)
 
     @staticmethod
     def df_info(this):
         [print(f'{i.info()}') for i in [this.train, this.test]]
-        ic(this.train.head(5))
-        ic(this.test.head(5))
+        ic(this.train.head(3))
+        ic(this.test.head(3))
 
     @staticmethod
     def null_check(this):
@@ -136,7 +153,7 @@ class TitanicModel(object):
         labels = ['Unknown', 'Baby', 'Child', 'Teenager', 'Student', 'Young Adult', 'Adult', 'Senior']
         for these in train, test:
             # pd.cut() 을 사용하시오. 다른 곳은 고치지 말고 다음 두 줄만 코딩하시오
-            these['AgeGroup'] = pd.cut(these['Age'], bins, right=True,labels=labels)  # pd.cut() 을 사용
+            these['AgeGroup'] = pd.cut(these['Age'], bins=bins, right=True,labels=labels)  # pd.cut() 을 사용
             these['AgeGroup'] = these['AgeGroup'].map(age_mapping)  # map() 을 사용
         return this
 
@@ -157,15 +174,23 @@ class TitanicModel(object):
 
     @staticmethod
     def fare_ratio(this) -> object:
-        train = this.train
-        test = this.test
-        fare_mapping = {'low Level' : 0, 'middle Level' : 1, 'high Level' : 2, 'highest Level' : 3}
-        train['Fare'] = train['Fare'].fillna(1)
-        test['Fare'] = test['Fare'].fillna(1)
+        fare_mapping = {1,2,3,4}
         # print(f'qcut 으로 bins 값 설정 {this.train["FareBand"].head()}')
-        bins = [-1, 8, 15, 31, np.inf]
-        labels = ['low Level', 'middle Level', 'high Level', 'highest Level']
-        for these in train, test:
-            these['FareBand'] = pd.qcut(these['Fare'], 4, labels=labels)
-            these['FareBand'] = these['FareBand'].map(fare_mapping)
+        this.train['Fare'] = this.train['Fare'].fillna(1)
+        this.test['Fare'] = this.test['Fare'].fillna(1)
+        # bins = [-1, 8, 15, 31, np.inf]
+        # labels = ['low Level', 'middle Level', 'high Level', 'highest Level']
+        for these in this.train, this.test:
+            these['FareBand'] = pd.qcut(these['Fare'], 4, fare_mapping)
         return this
+
+    @staticmethod
+    def create_k_fold()-> object:
+        return KFold(n_splits=10, shuffle=True, random_state=0)
+
+    @staticmethod
+    def get_accuracy(this, k_fold):
+        score = cross_val_score(RandomForestClassifier(), this.train, this.label,
+                                cv=k_fold, n_jobs=1, scoring='accuracy')
+        return round(np.mean(score) * 100, 2)
+
