@@ -194,3 +194,4 @@ class TitanicModel(object):
                                 cv=k_fold, n_jobs=1, scoring='accuracy')
         return round(np.mean(score) * 100, 2)
 
+
